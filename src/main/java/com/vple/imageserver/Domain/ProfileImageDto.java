@@ -1,4 +1,4 @@
-package com.vple.imageserver;
+package com.vple.imageserver.Domain;
 
 import lombok.Data;
 import org.springframework.web.multipart.MultipartFile;

@@ -1,5 +1,8 @@
-package com.vple.imageserver;
+package com.vple.imageserver.Controller;
 
+import com.vple.imageserver.Domain.PostImageDto;
+import com.vple.imageserver.Domain.ProfileImageDto;
+import com.vple.imageserver.Service.ImageService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
