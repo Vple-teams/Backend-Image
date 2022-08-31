@@ -22,7 +22,9 @@ public class SecurityConfig {
         http.csrf().disable()
                 .authorizeRequests().antMatchers(HttpMethod.OPTIONS).permitAll()
                 .antMatchers("/profile").permitAll()
-                .antMatchers(HttpMethod.PATCH).permitAll()
+                .antMatchers("/post").permitAll()
+                .antMatchers("/plogging").permitAll()
+                .antMatchers(HttpMethod.POST).permitAll()
                 .anyRequest().authenticated();
 
         return http.build();
@@ -32,7 +34,7 @@ public class SecurityConfig {
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration corsConfiguration = new CorsConfiguration();
 
-        corsConfiguration.addAllowedOrigin("http://localhost:3000");
+        corsConfiguration.addAllowedOrigin("https://localhost:3000");
         corsConfiguration.addAllowedHeader("*");
         corsConfiguration.addAllowedMethod("*");
 

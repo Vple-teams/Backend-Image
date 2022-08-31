@@ -1,5 +1,6 @@
 package com.vple.imageserver.Controller;
 
+import com.vple.imageserver.Domain.PloggingImageDto;
 import com.vple.imageserver.Domain.PostImageDto;
 import com.vple.imageserver.Domain.ProfileImageDto;
 import com.vple.imageserver.Service.ImageService;
@@ -22,7 +23,7 @@ public class ImageController {
 
     @PostMapping(value = "/profile")
     public ResponseEntity<?> uploadMyProfileImage(ProfileImageDto profileImageDto) {
-
+        System.out.println("profileImageDto = " + profileImageDto);
         try {
             String filePath = imageService.uploadProfileImage(profileImageDto.getFilename(),
                     profileImageDto.getEmail(), profileImageDto.getMultipartFile());
@@ -38,9 +39,20 @@ public class ImageController {
 
         try {
             String filePath = imageService.uploadPostImage(postImageDto.getMultipartFile(),
-                    postImageDto.getFilename(), postImageDto.getEmail(), postImageDto.getPostId());
+                    postImageDto.getEmail());
 
             return new ResponseEntity<>(URL_PREFIX + BUCKET_NAME + "/" + filePath, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @PostMapping("/plogging")
+    public ResponseEntity<?> uploadPloggingImage(PloggingImageDto ploggingImageDto) {
+        try {
+            imageService.uploadPloggingImage(ploggingImageDto.getMultipartFile(),
+                    ploggingImageDto.getEmail());
+            return new ResponseEntity<>("success", HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }

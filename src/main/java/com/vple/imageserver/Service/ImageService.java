@@ -16,6 +16,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedHashMap;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -56,17 +57,29 @@ public class ImageService {
         }
     }
 
-    public String uploadPostImage(MultipartFile multipartFile, String filename, String email, String postId) throws IOException {
-
-        final String filePath = email + "/post/" + postId + "/";
+    public String uploadPostImage(MultipartFile multipartFile, String email) throws IOException {
+        String randomFilename = UUID.randomUUID().toString();
+        final String filePath = email + "/post/";
 
         storage.create(
-                BlobInfo.newBuilder(BUCKET_NAME, filePath + filename)
+                BlobInfo.newBuilder(BUCKET_NAME, filePath + randomFilename)
                         .setAcl(new ArrayList<>(Collections.singletonList(Acl.of(Acl.User.ofAllAuthenticatedUsers(), Acl.Role.READER))))
                         .build(),
                 multipartFile.getBytes()
         );
 
-        return filePath + filename;
+        return filePath + randomFilename;
+    }
+
+    public void uploadPloggingImage(MultipartFile multipartFile, String email) throws IOException {
+        String randomFilename = UUID.randomUUID().toString();
+        final String filePath = "plogging/" + email + "/";
+
+        storage.create(
+                BlobInfo.newBuilder(BUCKET_NAME, filePath + randomFilename)
+                        .setAcl(new ArrayList<>(Collections.singletonList(Acl.of(Acl.User.ofAllAuthenticatedUsers(), Acl.Role.READER))))
+                        .build(),
+                multipartFile.getBytes()
+        );
     }
 }

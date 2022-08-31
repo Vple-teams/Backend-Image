@@ -4,10 +4,9 @@ import lombok.Data;
 import org.springframework.web.multipart.MultipartFile;
 
 @Data
-public class PostImageDto {
+public class PloggingImageDto {
 
     private MultipartFile multipartFile;
 
     private String email;
-
 }
