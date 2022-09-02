@@ -7,7 +7,4 @@ import org.springframework.web.multipart.MultipartFile;
 public class PostImageDto {
 
     private MultipartFile multipartFile;
-
-    private String email;
-
 }

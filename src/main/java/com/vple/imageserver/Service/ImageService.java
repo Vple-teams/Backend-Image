@@ -57,9 +57,9 @@ public class ImageService {
         }
     }
 
-    public String uploadPostImage(MultipartFile multipartFile, String email) throws IOException {
+    public String uploadPostImage(MultipartFile multipartFile) throws IOException {
         String randomFilename = UUID.randomUUID().toString();
-        final String filePath = email + "/post/";
+        final String filePath = "post/";
 
         storage.create(
                 BlobInfo.newBuilder(BUCKET_NAME, filePath + randomFilename)
@@ -71,9 +71,9 @@ public class ImageService {
         return filePath + randomFilename;
     }
 
-    public void uploadPloggingImage(MultipartFile multipartFile, String email) throws IOException {
+    public void uploadPloggingImage(MultipartFile multipartFile) throws IOException {
         String randomFilename = UUID.randomUUID().toString();
-        final String filePath = "plogging/" + email + "/";
+        final String filePath = "plogging/";
 
         storage.create(
                 BlobInfo.newBuilder(BUCKET_NAME, filePath + randomFilename)

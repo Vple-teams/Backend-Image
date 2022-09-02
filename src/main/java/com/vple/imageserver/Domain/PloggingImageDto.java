@@ -7,6 +7,4 @@ import org.springframework.web.multipart.MultipartFile;
 public class PloggingImageDto {
 
     private MultipartFile multipartFile;
-
-    private String email;
 }
