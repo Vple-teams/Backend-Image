@@ -7,7 +7,7 @@ GCP storage에 image를 업로드하는 서버입니다.
 ### Request & Response
 모든 호출 API의 HTTP method는 POST입니다.
 #### 1. user profile image
-Endpoint: http://localhost:8082/profile
+Endpoint: http://{SERVER_URL}:8082/profile
 - Request
 ``` json
 {
@@ -22,12 +22,11 @@ Endpoint: http://localhost:8082/profile
 "https://storage.googleapis.com/vple-bucket/{파일이 저장된 위치}"
 
 #### 2. post image
-Endpoint: http://localhost:8082/post
+Endpoint: http://{SERVER_URL}:8082/post
 
 ``` json
 {
-    "multipartFile": "{업로드할 파일}",
-    "email": "{업로드하는 사용자의 이메일}"
+    "multipartFile": "{업로드할 파일}"
 }
 ```
 
@@ -36,11 +35,10 @@ Endpoint: http://localhost:8082/post
 "https://storage.googleapis.com/vple-bucket/{파일이 저장된 위치}"
 
 #### 3. plogging image
-Endpoint: http://localhost:8082/plogging
+Endpoint: http://{SERVER_URL}:8082/plogging
 ``` json
 {
-    "multipartFile": "{업로드할 파일}",
-    "email": "{업로드하는 사용자의 이메일}"
+    "multipartFile": "{업로드할 파일}"
 }
 ```
 
