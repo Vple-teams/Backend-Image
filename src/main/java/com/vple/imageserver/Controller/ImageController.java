@@ -22,10 +22,8 @@ public class ImageController {
 
     @PostMapping(value = "/profile")
     public ResponseEntity<?> uploadMyProfileImage(ProfileImageDto profileImageDto) {
-        System.out.println("profileImageDto = " + profileImageDto);
         try {
-            String filePath = imageService.uploadProfileImage(profileImageDto.getFilename(),
-                    profileImageDto.getEmail(), profileImageDto.getMultipartFile());
+            String filePath = imageService.uploadProfileImage(profileImageDto.getEmail(), profileImageDto.getMultipartFile());
 
             return new ResponseEntity<>(URL_PREFIX + BUCKET_NAME + "/" + filePath, HttpStatus.OK);
         } catch (Exception e) {

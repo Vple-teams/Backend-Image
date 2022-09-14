@@ -11,17 +11,16 @@ Endpoint: http://{SERVER_URL}:8082/profile
 - Request
 ``` json
 {
-    "filename": "{프로필 이미지 파일명}",
     "multipartFile": "{업로드할 파일}",
     "email": "{업로드하는 사용자의 이메일}"
 }
 ```
-
+데이터베이스에도 사용자 대표 이미지의 url을 저장해야 하므로 email 주소가 필요합니다. 
 - Response 이미지 url
 
-"https://storage.googleapis.com/vple-bucket/{파일이 저장된 위치}"
+`"https://storage.googleapis.com/vple-bucket/{파일의 UUID + 확장자}"`
 
-#### 2. image
+#### 2. image - 프로필 이미지 외의 모든 이미지 업로드 링크
 Endpoint: http://{SERVER_URL}:8082/image
 
 ``` json
@@ -32,5 +31,5 @@ Endpoint: http://{SERVER_URL}:8082/image
 
 - Response 이미지 url
 
-"https://storage.googleapis.com/vple-bucket/{파일의 UUID + 확장자}"
+`"https://storage.googleapis.com/vple-bucket/{파일의 UUID + 확장자}"`
 

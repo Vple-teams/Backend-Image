@@ -4,10 +4,7 @@ import com.google.api.gax.paging.Page;
 import com.google.cloud.storage.*;
 import com.vple.imageserver.Domain.UserUpdateDto;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
-import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
@@ -15,7 +12,6 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.LinkedHashMap;
 import java.util.UUID;
 
 @Service
@@ -28,9 +24,9 @@ public class ImageService {
 
     private static final String URL_PREFIX = "https://storage.googleapis.com/";
 
-    public String uploadProfileImage(String filename, String email, MultipartFile multipartFile) throws IOException {
-
-        final String filePath = email + "/profile/";
+    public String uploadProfileImage(String email, MultipartFile multipartFile) throws IOException {
+        String randomFilename = UUID.randomUUID().toString();
+        final String filePath = "/profile/";
         final String URL = "http://localhost:8080/api/user/profile";
 
         Page<Blob> blobs = storage.list(BUCKET_NAME, Storage.BlobListOption.currentDirectory(), Storage.BlobListOption.prefix(filePath));
@@ -39,7 +35,7 @@ public class ImageService {
         }
 
         storage.create(
-                BlobInfo.newBuilder(BUCKET_NAME, filePath + filename)
+                BlobInfo.newBuilder(BUCKET_NAME, filePath + randomFilename)
                         .setAcl(new ArrayList<>(Collections.singletonList(Acl.of(Acl.User.ofAllAuthenticatedUsers(), Acl.Role.READER))))
                         .build(),
                 multipartFile.getBytes()
@@ -47,10 +43,10 @@ public class ImageService {
 
         RestTemplate restTemplate = new RestTemplate();
         ResponseEntity<String> responseEntity = restTemplate.postForEntity(URL, new UserUpdateDto(
-                URL_PREFIX + BUCKET_NAME + "/" + filePath + filename, email), String.class);
+                URL_PREFIX + BUCKET_NAME + "/" + filePath + randomFilename, email), String.class);
 
         if (responseEntity.getStatusCode().is2xxSuccessful()) {
-            return filePath + filename;
+            return filePath + randomFilename;
         }
         else {
             throw new IllegalStateException("파일 업로드에 오류가 발생했습니다.");
