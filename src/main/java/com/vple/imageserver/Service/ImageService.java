@@ -26,8 +26,8 @@ public class ImageService {
 
     public String uploadProfileImage(String email, MultipartFile multipartFile) throws IOException {
         String randomFilename = UUID.randomUUID().toString();
-        final String filePath = "/profile/";
-        final String URL = "http://localhost:8080/api/user/profile";
+        final String filePath = "profile/";
+        final String URL = "https://vple-backend.all.gagark.shop/api/user/profile";
 
         Page<Blob> blobs = storage.list(BUCKET_NAME, Storage.BlobListOption.currentDirectory(), Storage.BlobListOption.prefix(filePath));
         for(Blob blob : blobs.iterateAll()) {
@@ -55,7 +55,7 @@ public class ImageService {
 
     public String uploadImage(MultipartFile multipartFile) throws IOException {
         String randomFilename = UUID.randomUUID().toString();
-        final String filePath = "/image/";
+        final String filePath = "image/";
 
         storage.create(
                 BlobInfo.newBuilder(BUCKET_NAME, filePath + randomFilename)
